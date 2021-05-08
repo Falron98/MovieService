@@ -30,12 +30,12 @@ public class MovieService {
 
     public Movie addMovie(Movie movie){
         movie.setMovieId(movieIdCount);
+        movieIdCount++;
         movieList.add(movie);
         return movie;
     }
 
     public Movie updateMovie(int MovieId, Movie movie){
-        Movie movie1 = new Movie(1, "IT", "Horror");
 
         movieList
                 .stream()
@@ -52,4 +52,6 @@ public class MovieService {
                     .get();
 
     }
+
+
 }

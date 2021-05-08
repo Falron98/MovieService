@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 @RestController
-@RequestMapping("/movies")
 public class MovieRestController {
 
     private MovieService movieService;
@@ -18,24 +17,30 @@ public class MovieRestController {
         this.movieService = movieService;
     }
 
-    @GetMapping
+    @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getMovies(){ return ResponseEntity.ok(movieService.getAllMovies()); }
 
-    @GetMapping("/{id}")
+    @GetMapping("/movies/{id}")
     public ResponseEntity<Movie> getMovie(@PathVariable("id") int movieId){
         return ResponseEntity.ok(movieService.getMovie(movieId));
     }
 
-    @PostMapping
+    @PostMapping("/movies")
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie){
         return ResponseEntity.ok(movieService.addMovie(movie));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/movies/{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable(value = "id") int movieId,
             @RequestBody Movie movie){
         return ResponseEntity.ok(movieService.updateMovie(movieId, movie));
     }
+
+    @DeleteMapping("/movies/{id}")
+    public ResponseEntity<Void> deleteMovie(){
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }
