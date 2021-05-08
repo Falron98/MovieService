@@ -37,6 +37,19 @@ public class MovieService {
     public Movie updateMovie(int MovieId, Movie movie){
         Movie movie1 = new Movie(1, "IT", "Horror");
 
-         return movie1;
+        movieList
+                .stream()
+                .forEach(c -> {
+                    if(c.getMovieId() == MovieId){
+                        c.setName(movie.getName());
+                        c.setCategory(movie.getCategory());
+                    }
+                });
+        return movieList
+                .stream()
+                .filter(c -> c.getMovieId() == MovieId)
+                    .findFirst()
+                    .get();
+
     }
 }

@@ -1,11 +1,13 @@
 package pl.pjatk.MovieService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import pl.pjatk.MovieService.Movie.Movie;
 import pl.pjatk.MovieService.MovieService.MovieService;
 import java.util.List;
 
+@Service
 @RestController
 @RequestMapping("/movies")
 public class MovieRestController {
@@ -34,4 +36,6 @@ public class MovieRestController {
             @RequestBody Movie movie){
         return ResponseEntity.ok(movieService.updateMovie(movieId, movie));
     }
+
+
 }
