@@ -11,18 +11,18 @@ import java.util.List;
 @RestController
 public class MovieRestController {
 
-    private MovieService movieService;
+    private final MovieService movieService;
 
     public MovieRestController(MovieService movieService) {
         this.movieService = movieService;
     }
 
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies(){ return ResponseEntity.ok(movieService.getAllMovies()); }
+    public ResponseEntity<List<Movie>> getMovies(){ return ResponseEntity.ok(movieService.getMovieList()); }
 
     @GetMapping("/movies/{id}")
-    public ResponseEntity<Movie> getMovie(@PathVariable("id") int movieId){
-        return ResponseEntity.ok(movieService.getMovie(movieId));
+    public ResponseEntity<Movie> getMovie(@PathVariable("id") Long movieId){
+        return ResponseEntity.ok(movieService.findById(movieId));
     }
 
     @PostMapping("/movies")
@@ -31,14 +31,20 @@ public class MovieRestController {
     }
 
     @PutMapping("/movies/{id}")
-    public ResponseEntity<Movie> updateMovie(@PathVariable(value = "id") int movieId,
+    public ResponseEntity<Movie> updateMovie(@PathVariable(value = "id") Long Id,
             @RequestBody Movie movie){
-        return ResponseEntity.ok(movieService.updateMovie(movieId, movie));
+        return ResponseEntity.ok(movieService.updateMovie(Id, movie));
     }
 
     @DeleteMapping("/movies/{id}")
-    public ResponseEntity<Void> deleteMovie(){
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteMovie(@PathVariable("id") Long id){
+        movieService.deleteById(id);
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/movies/true/{id}")
+    public ResponseEntity<Movie> updateMovieAvailable(@PathVariable("id") Long id){
+        return ResponseEntity.ok(movieService.updateMovieAvailable(id));
     }
 
 

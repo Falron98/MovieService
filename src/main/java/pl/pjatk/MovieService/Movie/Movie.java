@@ -1,23 +1,53 @@
 package pl.pjatk.MovieService.Movie;
 
+
+import javax.persistence.*;
+
+@Entity
 public class Movie {
 
-    private int MovieId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
     private String Name;
-    private String Category;
 
-    public Movie(int movieId, String name, String category) {
-        MovieId = movieId;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    private Boolean isAvailable=false;
+
+    public Movie() {
+
+    }
+
+    public Movie(Long id, String name, Category category) {
+        Id = id;
         Name = name;
-        Category = category;
+        this.category = category;
     }
 
-    public int getMovieId() {
-        return MovieId;
+    public enum Category{
+        Horror,
+        Comedy,
+        Fantasy,
+        Action
     }
 
-    public void setMovieId(int movieId) {
-        MovieId = movieId;
+    public Long getId() {
+        return Id;
+    }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getName() {
@@ -28,11 +58,11 @@ public class Movie {
         Name = name;
     }
 
-    public String getCategory() {
-        return Category;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategory(String category) {
-        Category = category;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

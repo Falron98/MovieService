@@ -2,55 +2,51 @@ package pl.pjatk.MovieService.MovieService;
 
 
 import org.springframework.stereotype.Service;
+import pl.pjatk.MovieService.Exception.MovieNotFoundException;
 import pl.pjatk.MovieService.Movie.Movie;
+import pl.pjatk.MovieService.Repository.MovieRepository;
+
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class MovieService {
 
-    private int movieIdCount = 1;
-    private final List<Movie> movieList = new CopyOnWriteArrayList<>();
+    private final MovieRepository movieRepository;
 
-    public List<Movie> getMovies(){ return movieList;}
-
-    public List<Movie> getAllMovies(){
-        Movie movie1 = new Movie(1, "IT", "Horror");
-        Movie movie2 = new Movie(2, "IT2", "Horror");
-        Movie movie3 = new Movie(3, "Deadpool", "Action");
-
-        return List.of(movie1, movie2, movie3);
+    public MovieService(MovieRepository movieRepository){
+        this.movieRepository = movieRepository;
     }
 
-    public Movie getMovie(int MovieId){
-        Movie movie1 = new Movie(MovieId, "IT", "Horror");
+    public Movie findById(Long id) {
+        return movieRepository.findById(id)
+                .orElseThrow(MovieNotFoundException::new);
 
-        return movie1;
+    }
+
+    public List<Movie> getMovieList() {
+        return movieRepository.findAll();
     }
 
     public Movie addMovie(Movie movie){
-        movie.setMovieId(movieIdCount);
-        movieIdCount++;
-        movieList.add(movie);
-        return movie;
+        return movieRepository.save(movie);
     }
 
-    public Movie updateMovie(int MovieId, Movie movie){
+    public Movie updateMovie(Long Id, Movie movie){
+        Movie movieUpdate = movieRepository.getOne(Id);
+        movieUpdate.setName(movie.getName());
+        movieUpdate.setCategory(movie.getCategory());
+        movieUpdate.setAvailable(true);
+        return movieRepository.save(movieUpdate);
+    }
 
-        movieList
-                .stream()
-                .forEach(c -> {
-                    if(c.getMovieId() == MovieId){
-                        c.setName(movie.getName());
-                        c.setCategory(movie.getCategory());
-                    }
-                });
-        return movieList
-                .stream()
-                .filter(c -> c.getMovieId() == MovieId)
-                    .findFirst()
-                    .get();
+    public void deleteById(Long id){
+        movieRepository.deleteById(id);
+    }
 
+    public Movie updateMovieAvailable(Long Id){
+        Movie movieUpdate = movieRepository.getOne(Id);
+        movieUpdate.setAvailable(true);
+        return movieRepository.save(movieUpdate);
     }
 
 
