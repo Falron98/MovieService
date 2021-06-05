@@ -8,13 +8,4 @@ import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    Optional<Movie> findById(Long aLong);
-
-    List<Movie> findAll();
-
-    void deleteById(Long aLong);
-
-    <S extends Movie> S save(S entity);
-
-    Movie getOne(Long aLong);
 }

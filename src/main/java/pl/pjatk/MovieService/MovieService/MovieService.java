@@ -17,7 +17,7 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public Movie findById(Long id) {
+    public Movie getMovieById(Long id) {
         return movieRepository.findById(id)
                 .orElseThrow(MovieNotFoundException::new);
 

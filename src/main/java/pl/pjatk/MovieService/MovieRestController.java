@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 @RestController
+@RequestMapping("/movies/")
 public class MovieRestController {
 
     private final MovieService movieService;
@@ -17,32 +18,32 @@ public class MovieRestController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/movies")
+    @GetMapping("")
     public ResponseEntity<List<Movie>> getMovies(){ return ResponseEntity.ok(movieService.getMovieList()); }
 
-    @GetMapping("/movies/{id}")
+    @GetMapping("get/{id}")
     public ResponseEntity<Movie> getMovie(@PathVariable("id") Long movieId){
-        return ResponseEntity.ok(movieService.findById(movieId));
+        return ResponseEntity.ok(movieService.getMovieById(movieId));
     }
 
-    @PostMapping("/movies")
+    @PostMapping("")
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie){
         return ResponseEntity.ok(movieService.addMovie(movie));
     }
 
-    @PutMapping("/movies/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Movie> updateMovie(@PathVariable(value = "id") Long Id,
             @RequestBody Movie movie){
         return ResponseEntity.ok(movieService.updateMovie(Id, movie));
     }
 
-    @DeleteMapping("/movies/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable("id") Long id){
         movieService.deleteById(id);
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/movies/true/{id}")
+    @PutMapping("true/{id}")
     public ResponseEntity<Movie> updateMovieAvailable(@PathVariable("id") Long id){
         return ResponseEntity.ok(movieService.updateMovieAvailable(id));
     }
