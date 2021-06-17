@@ -1,7 +1,11 @@
 package pl.pjatk.MovieService.MovieService;
 
 
+import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import pl.pjatk.MovieService.Exception.BadRequestException;
+import pl.pjatk.MovieService.Exception.InternalServerErrorException;
 import pl.pjatk.MovieService.Exception.MovieNotFoundException;
 import pl.pjatk.MovieService.Movie.Movie;
 import pl.pjatk.MovieService.Repository.MovieRepository;
@@ -49,5 +53,16 @@ public class MovieService {
         return movieRepository.save(movieUpdate);
     }
 
+    public void test(){
+        throw new MovieNotFoundException();
+    }
+
+    public void test2(){
+        throw new BadRequestException();
+    }
+
+    public void test3(){
+        throw new InternalServerErrorException();
+    }
 
 }

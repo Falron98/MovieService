@@ -1,8 +1,10 @@
 package pl.pjatk.MovieService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import pl.pjatk.MovieService.Exception.BadRequestException;
 import pl.pjatk.MovieService.Movie.Movie;
 import pl.pjatk.MovieService.MovieService.MovieService;
 import java.util.List;
@@ -46,6 +48,19 @@ public class MovieRestController {
     @PutMapping("true/{id}")
     public ResponseEntity<Movie> updateMovieAvailable(@PathVariable("id") Long id){
         return ResponseEntity.ok(movieService.updateMovieAvailable(id));
+    }
+
+    @GetMapping("test")
+    public void test(){
+        movieService.test();
+    }
+    @GetMapping("test2")
+    public void test2(){
+        movieService.test2();
+    }
+    @GetMapping("test3")
+    public void test3(){
+        movieService.test3();
     }
 
 
